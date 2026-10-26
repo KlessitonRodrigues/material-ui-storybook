@@ -13,11 +13,13 @@ export const LoadScreen = (props: LoadScreenProps) => {
 
   return (
     <div
-      className={twMerge(`absolute w-screen h-screen bg-black z-50 ${className}`)}
+      className={twMerge(
+        `absolute w-screen h-screen bg-black/70 backdrop-blur-sm z-50 ${className}`,
+      )}
       {...loadScreenProps}
     >
       <div className="m-auto flex gap-4 items-center justify-center h-full">
-        <span className="loading loading-bars loading-xl text-white" />
+        <span className="loading loading-spinner loading-xl text-white" />
         <Text size="4xl" bold className="text-white">
           {props.title}
         </Text>

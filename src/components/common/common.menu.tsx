@@ -23,11 +23,16 @@ export const Menu = (props: MenuProps) => {
     <ul className={twMerge(...classNames)} {...menuProps}>
       {items?.map((item, index) => (
         <li key={index}>
-          <Link href={item.href || ''} onClick={item.onClick}>
-            <div className="w-8 h-8 border rounded-md p-1">
-              <Icons iconType={item.icon} className="mr-2" />
-            </div>
-            <Text bold>{item.label}</Text>
+          <Link
+            href={item.href || ''}
+            onClick={item.onClick}
+            className={twMerge(
+              'rounded-sm',
+              item.active && 'bg-primary/10 text-primary hover:bg-primary/15',
+            )}
+          >
+            <Icons iconType={item.icon} iconSize="1.2rem" className="mr-2" />
+            <Text bold={item.active}>{item.label}</Text>
           </Link>
         </li>
       ))}

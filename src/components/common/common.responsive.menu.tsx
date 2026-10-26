@@ -40,7 +40,7 @@ export const ResponsiveMenu = (props: ResponsiveMenuProps) => {
         </Button>
         <div
           className={twMerge(
-            'fixed z-50 left-2 w-[94vw] p-6 bg-bg1 rounded-sm shadow-sm border',
+            'fixed z-50 left-2 w-[94vw] p-6 bg-bg1 rounded-md shadow-lg',
             positionMap[position],
           )}
           style={{ display: isOpen ? 'flex' : 'none' }}

@@ -31,7 +31,11 @@ export const Table = (props: TableProps) => {
 
   const tableRows = useMemo(() => {
     return items.map((item, index) => (
-      <tr key={index} className="hover:bg-bg3 cursor-pointer" onClick={() => onSelect?.(item)}>
+      <tr
+        key={index}
+        className="row-hover hover:bg-bg2 cursor-pointer transition-colors"
+        onClick={() => onSelect?.(item)}
+      >
         {columns.map(column => (
           <td key={column.key} className={getResponsiveStyle(column.responsive)}>
             {column.render ? column.render(item) : item[column.key]}
@@ -42,9 +46,9 @@ export const Table = (props: TableProps) => {
   }, [items, columns, onSelect]);
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-auto rounded-md shadow-xs md-elevatable">
       <table className="table">
-        <thead className="bg-bg2">
+        <thead className="bg-bg2 uppercase tracking-wide">
           <tr>{tableTitles}</tr>
         </thead>
         <tbody data-loading={isLoading}>{tableRows}</tbody>

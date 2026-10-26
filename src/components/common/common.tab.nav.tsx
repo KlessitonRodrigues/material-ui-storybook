@@ -33,7 +33,9 @@ export const TabList = (props: TabListProps) => {
 
   const tabOptions = useMemo(() => {
     return items.map((item, index) => {
-      const classNames = ['tab tabs-lg text-xs text-fg1 gap-1 hover:bg-bg2'];
+      const classNames = [
+        'tab tabs-lg font-medium uppercase tracking-[0.02857em] text-xs text-fg3 gap-1 hover:bg-bg2 rounded-sm',
+      ];
       if (tabIndex === index) classNames.push('tab-active text-primary');
       if (item.disabled) classNames.push('tab-disabled');
       if (item.responsive) classNames.push('hidden', `${item.responsive}:flex`);
@@ -54,7 +56,7 @@ export const TabList = (props: TabListProps) => {
 
   return (
     <div className={twMerge('w-full', className)} {...tabListProps}>
-      <div role="tablist" className="tabs tabs-lift">
+      <div role="tablist" className="tabs tabs-border">
         {tabOptions}
         <div className="flex-1 border-b" />
       </div>

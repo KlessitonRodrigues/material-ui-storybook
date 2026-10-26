@@ -7,7 +7,10 @@ export const Card = (props: CardProps) => {
   const { className, children, ...cardProps } = props;
 
   return (
-    <div className={twMerge('w-full card bg-bg1 border rounded-sm p-4', className)} {...cardProps}>
+    <div
+      className={twMerge('w-full card bg-bg1 rounded-md shadow-xs md-elevatable p-4', className)}
+      {...cardProps}
+    >
       {children}
     </div>
   );

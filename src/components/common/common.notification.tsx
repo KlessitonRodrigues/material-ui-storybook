@@ -30,7 +30,10 @@ export const NotificationList = (props: NotificationListProps) => {
     }
 
     return notifications.map(notification => (
-      <Row key={notification.id} className={`border rounded-sm p-4 bg-bg2`}>
+      <Row
+        key={notification.id}
+        className="rounded-sm p-3 hover:bg-bg2 cursor-pointer border-b last:border-b-0"
+      >
         <Text size="sm" className="w-full">
           {notification.message}
         </Text>
@@ -39,17 +42,17 @@ export const NotificationList = (props: NotificationListProps) => {
   }, [notifications, onRemove]);
 
   return (
-    <Column className="p-4 bg-bg1 shadow-lg">
+    <Column className="p-4 bg-bg1 rounded-md shadow-md" gap={1}>
       <Row>
         <Icons iconType="notification" iconSize="1.4rem" />
         <Text bold size="lg" className="w-full">
           {title || 'Notifications'}
         </Text>
-        <Button mode="ghost" variant="square" size="sm" onClick={() => onRemove?.()}>
+        <Button mode="ghost" variant="circle" size="sm" onClick={() => onRemove?.()}>
           <Icons iconType="close" iconSize="1.2rem" />
         </Button>
       </Row>
-      <Column>{notificationItems}</Column>
+      <Column gap={0}>{notificationItems}</Column>
     </Column>
   );
 };

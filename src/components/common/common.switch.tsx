@@ -19,7 +19,7 @@ export const Switch = (props: SwitchProps) => {
     <Row>
       <Text size="sm">{label}</Text>
       {beforeElement}
-      <label className="toggle toggle-md border">
+      <label className="toggle toggle-md toggle-primary border-none shadow-xs">
         <input
           type="checkbox"
           defaultChecked={checked}

@@ -7,10 +7,13 @@
 @source "../";
 
 :root {
-  /* Colors */
-  --color-main: #3b82f6;
-  --color-main-bg: #1e40af;
+  /* Colors - Material Design palette (MUI defaults) */
+  --color-main: #1976d2;
+  --color-main-bg: #1565c0;
   --color-main-text: #ffffff;
+  --color-secondary-main: #9c27b0;
+  --color-secondary-dark: #7b1fa2;
+  --color-secondary-text: #ffffff;
   --color-bg1: #ffffff;
   --color-bg2: #fafafa;
   --color-bg3: #f5f5f5;
@@ -19,11 +22,11 @@
   --color-fg2: #374151;
   --color-fg3: #4b5563;
   --color-fg4: #6b7280;
-  --color-default-yellow: #ca8a04;
-  --color-default-red: #c62828;
+  --color-default-yellow: #ed6c02;
+  --color-default-red: #d32f2f;
   --color-default-green: #2e7d32;
   --color-default-gray: #9ca3af;
-  --color-default-blue: #1565c0;
+  --color-default-blue: #0288d1;
   --color-default-white: #f9fafb;
   --color-default-black: #1f2937;
   --color-opacity-black: #0006;
@@ -40,12 +43,12 @@
   --color-base-content: var(--color-fg1);
   --color-primary: var(--color-main);
   --color-primary-content: var(--color-main-text);
-  --color-secondary: var(--color-default-blue);
-  --color-secondary-content: var(--color-default-white);
+  --color-secondary: var(--color-secondary-main);
+  --color-secondary-content: var(--color-secondary-text);
   --color-accent: var(--color-bg1);
   --color-accent-content: var(--color-fg1);
-  --color-neutral: var(--color-bg1);
-  --color-neutral-content: var(--color-fg1);
+  --color-neutral: var(--color-fg1);
+  --color-neutral-content: var(--color-bg1);
   --color-info: var(--color-default-blue);
   --color-info-content: var(--color-default-white);
   --color-success: var(--color-default-green);
@@ -56,16 +59,16 @@
   --color-error-content: var(--color-default-white);
   --tab-bg: var(--color-bg2);
 
-  /* Font Families */
-  --font-sans: Rubik, sans-serif;
+  /* Font Families (MUI default stack) */
+  --font-sans: Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-serif: Merriweather, serif;
 
-  /* Border Radius */
-  --radius-sm: 0.3rem;
-  --radius-md: 0.6rem;
-  --radius-lg: 0.9rem;
-  --radius-xl: 1.2rem;
-  --radius-2xl: 1.5rem;
+  /* Border Radius (MUI defaults: 4px controls, 8-16px surfaces) */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.75rem;
 
   /* Font Sizes */
   --text-xs: 0.9rem;
@@ -77,12 +80,12 @@
   --text-3xl: 1.75rem;
   --text-4xl: 2rem;
 
-  /* Box Shadows */
-  --shadow-xs: 0px 1px 2px 0 #0001;
-  --shadow-sm: 1px 1px 3px 0 #0002;
-  --shadow-md: 1px 1px 4px 0 #0003;
-  --shadow-lg: 1px 1px 5px 0 #0004;
-  --shadow-xl: 1px 1px 6px 0 #0005;
+  /* Box Shadows - Material Design elevation levels */
+  --shadow-xs: 0px 2px 1px -1px #0000001f, 0px 1px 1px 0px #00000014, 0px 1px 3px 0px #0000000f;
+  --shadow-sm: 0px 3px 1px -2px #0000001f, 0px 2px 2px 0px #00000014, 0px 1px 5px 0px #0000000f;
+  --shadow-md: 0px 2px 4px -1px #0000001f, 0px 4px 5px 0px #00000014, 0px 1px 10px 0px #0000000f;
+  --shadow-lg: 0px 5px 5px -3px #0000001f, 0px 8px 10px 1px #00000014, 0px 3px 14px 2px #0000000f;
+  --shadow-xl: 0px 8px 10px -5px #0000001f, 0px 16px 24px 2px #00000014, 0px 6px 30px 5px #0000000f;
 }
 
 * {
@@ -120,11 +123,27 @@ body.dark {
   --skeleton-base: #4b5563;
   --skeleton-shimmer: #6b7280;
 
+  /* Material Design dark-theme palette (lighter tones for contrast) */
+  --color-main: #90caf9;
+  --color-main-bg: #64b5f6;
+  --color-main-text: #002138;
+  --color-secondary-main: #ce93d8;
+  --color-secondary-dark: #ba68c8;
+  --color-secondary-text: #38003d;
+  --color-default-yellow: #ffa726;
+  --color-default-red: #f44336;
+  --color-default-green: #66bb6a;
+  --color-default-blue: #29b6f6;
+
   /* Daisy theme */
   --color-base-100: var(--color-bg1);
   --color-base-200: var(--color-bg3);
   --color-base-300: var(--color-bg4);
   --color-base-content: var(--color-fg1);
+  --color-primary-content: var(--color-main-text);
+  --color-secondary-content: var(--color-secondary-text);
+  --color-neutral: var(--color-fg1);
+  --color-neutral-content: var(--color-bg1);
   --tab-bg: var(--color-bg2);
 }
 
@@ -157,6 +176,10 @@ textarea.hide-caret {
 
 .text-main {
   color: var(--color-main);
+}
+
+.text-secondary {
+  color: var(--color-secondary-main);
 }
 
 /* [&>span]:text-main */
@@ -200,6 +223,9 @@ textarea.hide-caret {
 
 .bg-main {
   background-color: var(--color-main-bg);
+}
+.bg-secondary {
+  background-color: var(--color-secondary-main);
 }
 .bg-bg1 {
   background-color: var(--color-bg1);
@@ -434,4 +460,56 @@ textarea.hide-caret {
   width: 100%;
   height: 100%;
   background-color: var(--color-bg4);
+}
+
+/* Material Design */
+
+/* Center-expanding "ripple" affordance (CSS-only approximation of MUI's
+   TouchRipple). Uses currentColor so it adapts to the element's own
+   foreground color (white on filled/contained surfaces, colored on
+   outlined/text surfaces). Add `.md-ripple` to any clickable element. */
+.md-ripple {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.md-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-image: radial-gradient(circle, currentColor 10%, transparent 10.5%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.5s ease-out,
+    opacity 1s ease-out;
+}
+
+.md-ripple:active::after {
+  transform: scale(0, 0);
+  opacity: 0.24;
+  transition: 0s;
+}
+
+/* Material elevation hover lift, used by Card/Paper */
+.md-elevatable {
+  transition:
+    box-shadow 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
+}
+
+.md-elevatable:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* MUI-style focus ring for inputs/buttons */
+.md-focus-ring:focus-visible {
+  outline: 2px solid var(--color-main);
+  outline-offset: 2px;
 }

@@ -21,12 +21,13 @@ export const SelectField = (props: SelectFieldProps) => {
 
   return (
     <fieldset className={twMerge('fieldset w-full', className)}>
-      <legend className="fieldset-legend">{label}</legend>
+      <legend className="fieldset-legend font-medium text-fg3 text-xs">{label}</legend>
       <select
         className={twMerge(
-          `w-full outline-none select select-${props.size || 'md'}`,
+          `w-full outline-none select select-${props.size || 'md'} rounded-sm`,
+          'focus:[--input-color:var(--color-primary)]',
           toCss(size, `select-${size}`, 'select-md'),
-          toCss(error, 'border-error'),
+          toCss(error, 'border-error focus:[--input-color:var(--color-error)]'),
           toCss(disabled, 'opacity-50 cursor-not-allowed'),
         )}
         defaultValue={defaultValue || 'Select'}

@@ -14,7 +14,7 @@ export interface RadioInputFieldProps {
 
 export const RadioInputField = (props: RadioInputFieldProps) => {
   const inputStyles = twMerge([
-    'radio mx-2',
+    'radio radio-primary mx-2',
     toCss(props.size, `radio-${props.size}`, 'radio-md'),
     props.className,
   ]);
@@ -40,6 +40,6 @@ export const RadioInputField = (props: RadioInputFieldProps) => {
 
 /* Tailwind include
   join join-item
-  radio radio-sm radio-md radio-lg
+  radio radio-primary radio-sm radio-md radio-lg
   btn btn-sm btn-md btn-lg
 */

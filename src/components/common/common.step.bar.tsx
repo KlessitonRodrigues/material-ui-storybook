@@ -9,15 +9,15 @@ interface StepBarProps {
 const styleMap = {
   horizontal: {
     stepStyle: 'flex gap-2 p-2',
-    stepItem: 'w-10 h-1',
+    stepItem: 'w-10 h-1 rounded-full transition-opacity duration-200',
   },
   vertical: {
     stepStyle: 'flex flex-col gap-2 p-2',
-    stepItem: 'h-10 w-1',
+    stepItem: 'h-10 w-1 rounded-full transition-opacity duration-200',
   },
   activeItem: {
     true: 'bg-bg1',
-    false: 'bg-bg1 opacity-50',
+    false: 'bg-bg1 opacity-40',
   },
 };
 

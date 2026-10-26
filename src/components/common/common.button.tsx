@@ -16,11 +16,16 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export const Button = (props: ButtonProps) => {
+  const isContained = !props.mode;
+
   const btnStyles = twMerge([
-    'btn rounded-sm',
-    toCss(props.mode === 'ghost', 'btn-ghost'),
-    toCss(props.mode === 'link', 'btn-link'),
-    toCss(props.mode === 'outline', 'btn-outline border-base-300 hover:bg-bg2'),
+    // Material Design button base: subtle radius, bold uppercase label + ripple
+    'btn md-ripple md-focus-ring rounded-sm font-medium uppercase tracking-[0.02857em]',
+    'transition-shadow duration-200',
+    toCss(isContained, 'shadow-xs hover:shadow-sm active:shadow-xs'),
+    toCss(props.mode === 'ghost', 'btn-ghost shadow-none'),
+    toCss(props.mode === 'link', 'btn-link shadow-none normal-case tracking-normal'),
+    toCss(props.mode === 'outline', 'btn-outline border-base-300 shadow-none hover:bg-bg2'),
     toCss(props.disabled, 'cursor-not-allowed opacity-50'),
     toCss(props.loading, 'cursor-not-allowed'),
     toCss(props.variant, `btn-${props.variant}`),

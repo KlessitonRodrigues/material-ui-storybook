@@ -34,9 +34,10 @@ export const AreaInputField = (props: AreaInputFieldProps) => {
   } = props;
 
   const fieldStyles = twMerge([
-    'outline-none w-full',
+    'outline-none w-full rounded-sm',
+    'focus-within:[--input-color:var(--color-primary)]',
     toCss(size, `textarea-${size}`, 'textarea-md'),
-    toCss(error, 'textarea-error'),
+    toCss(error, 'textarea-error focus-within:[--input-color:var(--color-error)]'),
     className,
   ]);
 
@@ -47,7 +48,7 @@ export const AreaInputField = (props: AreaInputFieldProps) => {
 
   return (
     <fieldset className={'fieldset w-full'} {...fieldProps}>
-      {label && <legend className="fieldset-legend font-normal">{label}</legend>}
+      {label && <legend className="fieldset-legend font-medium text-fg3 text-xs">{label}</legend>}
       <label className={fieldStyles} data-loading={loading}>
         {before}
         <textarea

@@ -24,15 +24,19 @@ export const DescriptionMenu = (props: DescriptionMenuProps) => {
   return (
     <ul className={twMerge(...classNames)} {...menuProps}>
       {items?.map((item, index) => {
-        const activeItem = item.active ? 'bg-main text-white' : 'bg-bg1 text-fg1';
+        const activeItem = item.active ? 'bg-main text-white shadow-xs' : 'bg-bg2 text-fg1';
         return (
           <li key={index}>
-            <Link href={item.href || ''} onClick={item.onClick}>
-              <div className={`border rounded-md p-2 w-10 ${activeItem}`}>
+            <Link
+              href={item.href || ''}
+              onClick={item.onClick}
+              className={twMerge('rounded-sm', item.active && 'bg-primary/10 hover:bg-primary/15')}
+            >
+              <div className={`rounded-sm p-2 w-10 ${activeItem}`}>
                 <Icons iconType={item.icon} />
               </div>
               <Column flexX="start" gap={0}>
-                <Text size="lg" bold>
+                <Text size="lg" bold className={item.active ? 'text-primary' : ''}>
                   {item.label}
                 </Text>
                 <Text tag="p" size="xs" opacity="70">

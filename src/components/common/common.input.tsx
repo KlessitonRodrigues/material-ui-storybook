@@ -19,8 +19,9 @@ export interface InputFieldProps extends HTMLAttributes<HTMLDivElement> {
 
 export const InputField = (props: InputFieldProps) => {
   const inputStyles = twMerge([
-    'input outline-none w-full',
-    toCss(props.error, 'input-error'),
+    'input outline-none w-full rounded-sm',
+    'focus-within:[--input-color:var(--color-primary)]',
+    toCss(props.error, 'input-error focus-within:[--input-color:var(--color-error)]'),
     toCss(props.size, `input-${props.size}`, 'input-md'),
     props.className,
   ]);
@@ -37,7 +38,7 @@ export const InputField = (props: InputFieldProps) => {
 
   return (
     <fieldset className={fieldsetStyles}>
-      <legend className="fieldset-legend font-normal">{props.label}</legend>
+      <legend className="fieldset-legend font-medium text-fg3 text-xs">{props.label}</legend>
       <label className={inputStyles}>
         {props.before}
         <input

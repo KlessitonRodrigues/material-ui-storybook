@@ -9,7 +9,7 @@ export const Paper = (props: PaperProps) => {
   const { className, children, ...paperProps } = props;
 
   const paperStyles = twMerge([
-    'paper w-full space-y-4 rounded-sm bg-bg1 p-6 shadow-sm slide-up',
+    'paper w-full space-y-4 rounded-md bg-bg1 p-6 shadow-sm slide-up',
     className,
   ]);
 

@@ -42,7 +42,7 @@ export const ResponsiveButton = (props: ResponsiveButtonProps) => {
         </Button>
         <div
           className={twMerge(
-            'absolute z-50 p-6 bg-bg1 rounded-sm shadow-sm border',
+            'absolute z-50 p-6 bg-bg1 rounded-md shadow-lg',
             positionMap[position],
           )}
           style={{ display: isOpen ? 'flex' : 'none' }}
