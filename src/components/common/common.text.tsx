@@ -1,4 +1,6 @@
-interface ITextProps {
+import { Typography } from '@mui/material';
+
+type ITextProps = {
   id?: string;
   bold?: boolean;
   centered?: boolean;
@@ -21,48 +23,64 @@ interface ITextProps {
     | 'strong'
     | 'mark'
     | 'em';
-  children: React.ReactNode;
+  children?: React.ReactNode;
   style?: React.CSSProperties;
-}
-
-const TagMap = (props: ITextProps) => {
-  const { tag, className, children, style, id } = props;
-  const tagProps = { className, children, style, id };
-  if (tag === 'p') return <p {...tagProps} />;
-  if (tag === 'b') return <b {...tagProps} />;
-  if (tag === 'h1') return <h1 {...tagProps} />;
-  if (tag === 'h2') return <h2 {...tagProps} />;
-  if (tag === 'h3') return <h3 {...tagProps} />;
-  if (tag === 'h4') return <h4 {...tagProps} />;
-  if (tag === 'h5') return <h5 {...tagProps} />;
-  if (tag === 'h6') return <h6 {...tagProps} />;
-  if (tag === 'span') return <span {...tagProps} />;
-  if (tag === 'small') return <small {...tagProps} />;
-  if (tag === 'strong') return <strong {...tagProps} />;
-  if (tag === 'mark') return <mark {...tagProps} />;
-  if (tag === 'em') return <em {...tagProps} />;
-  return <p {...tagProps} />;
 };
+
+const colorVarMap = {
+  main: 'var(--color-main)',
+  blue: 'var(--color-default-blue)',
+  red: 'var(--color-default-red)',
+  green: 'var(--color-default-green)',
+  yellow: 'var(--color-default-yellow)',
+  black: 'var(--color-default-black)',
+  gray: 'var(--color-default-gray)',
+  white: 'var(--color-default-white)',
+} as const;
+
+const sizeMap = {
+  xs: '0.9rem',
+  sm: '0.95rem',
+  md: '1rem',
+  lg: '1.125rem',
+  xl: '1.25rem',
+  '2xl': '1.5rem',
+  '3xl': '1.75rem',
+  '4xl': '2rem',
+  '5xl': '2.25rem',
+} as const;
 
 export const Text = (props: ITextProps) => {
-  const { bold, centered, color, size, opacity, inline, className = '' } = props;
-  const textStyle: string[] = [];
+  const {
+    id,
+    tag = 'p',
+    className = '',
+    color,
+    size,
+    opacity,
+    bold,
+    centered,
+    inline,
+    style,
+    children,
+  } = props;
 
-  if (bold) textStyle.push('font-bold');
-  if (centered) textStyle.push('text-center');
-  if (color) textStyle.push(`text-${color}`);
-  if (size) textStyle.push(`text-${size}`);
-  if (opacity) textStyle.push(`opacity-${opacity}`);
-  if (inline) textStyle.push('inline');
-  if (className) textStyle.push(className);
-  return <TagMap {...props} className={textStyle.join(' ')} />;
+  return (
+    <Typography
+      id={id}
+      component={tag as any}
+      className={className}
+      style={style}
+      sx={{
+        ...(bold ? { fontWeight: 700 } : {}),
+        ...(centered ? { textAlign: 'center' } : {}),
+        ...(color ? { color: colorVarMap[color] } : {}),
+        ...(size ? { fontSize: sizeMap[size] } : {}),
+        ...(opacity ? { opacity: Number(opacity) / 100 } : {}),
+        ...(inline ? { display: 'inline' } : {}),
+      }}
+    >
+      {children}
+    </Typography>
+  );
 };
-
-/* tailwind include
-    font-bold font-normal
-    text-xs text-sm text-md text-lg text-xl text-2xl text-3xl text-4xl text-5xl
-    text-main text-blue text-red text-green text-yellow text-black text-gray text-white
-    opacity-10 opacity-20 opacity-30 opacity-40 opacity-50 opacity-60 opacity-70 opacity-80 opacity-90 opacity-100
-    text-center
-    inline
-*/

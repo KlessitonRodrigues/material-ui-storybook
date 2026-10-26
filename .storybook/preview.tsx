@@ -1,7 +1,9 @@
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { Preview } from '@storybook/nextjs-vite';
 
 // @ts-expect-error
 import '../src/global.css';
+import { theme } from '../src/theme/theme';
 
 const preview: Preview = {
   tags: ['autodocs'],
@@ -14,6 +16,15 @@ const preview: Preview = {
       },
     },
   },
+
+  decorators: [
+    Story => (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Story />
+      </ThemeProvider>
+    ),
+  ],
 };
 
 export default preview;

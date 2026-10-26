@@ -1,4 +1,4 @@
-import { toBooleanStr } from '../../utils/utils.string';
+import { Box } from '@mui/material';
 
 interface StepBarProps {
   className?: string;
@@ -6,33 +6,32 @@ interface StepBarProps {
   stepItems: { active: boolean; onClick?: () => void }[];
 }
 
-const styleMap = {
-  horizontal: {
-    stepStyle: 'flex gap-2 p-2',
-    stepItem: 'w-10 h-1',
-  },
-  vertical: {
-    stepStyle: 'flex flex-col gap-2 p-2',
-    stepItem: 'h-10 w-1',
-  },
-  activeItem: {
-    true: 'bg-bg1',
-    false: 'bg-bg1 opacity-50',
-  },
-};
-
 export const StepBar = (props: StepBarProps) => {
   const { className, direction = 'horizontal', stepItems } = props;
 
   return (
-    <div className={`${styleMap[direction].stepStyle} ${className || ''}`}>
+    <Box
+      className={className}
+      sx={{
+        display: 'flex',
+        flexDirection: direction === 'vertical' ? 'column' : 'row',
+        gap: 8,
+        p: 8,
+      }}
+    >
       {stepItems.map(({ active, onClick }, i) => (
-        <div
+        <Box
           key={i}
-          className={`${styleMap[direction].stepItem} ${styleMap.activeItem[toBooleanStr(active)]}`}
+          sx={{
+            width: direction === 'vertical' ? 4 : 40,
+            height: direction === 'vertical' ? 40 : 4,
+            backgroundColor: 'var(--color-bg1)',
+            opacity: active ? 1 : 0.5,
+            cursor: 'pointer',
+          }}
           onClick={onClick}
         />
       ))}
-    </div>
+    </Box>
   );
 };

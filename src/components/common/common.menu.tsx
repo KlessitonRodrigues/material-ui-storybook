@@ -1,11 +1,10 @@
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Link from 'next/link';
-import { HTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import { IconProps, Icons } from './common.icon';
 import { Text } from './common.text';
 
-export interface MenuProps extends HTMLAttributes<HTMLUListElement> {
+export interface MenuProps extends React.HTMLAttributes<HTMLUListElement> {
   items?: {
     icon: IconProps['iconType'];
     label: string;
@@ -17,20 +16,40 @@ export interface MenuProps extends HTMLAttributes<HTMLUListElement> {
 
 export const Menu = (props: MenuProps) => {
   const { className, items, ...menuProps } = props;
-  const classNames = [`menu w-full h-full min-w-60 bg-bg1 ${className}`];
 
   return (
-    <ul className={twMerge(...classNames)} {...menuProps}>
+    <List
+      component="ul"
+      className={className}
+      sx={{ width: '100%', minWidth: 240, backgroundColor: 'var(--color-bg1)', padding: 0 }}
+      {...menuProps}
+    >
       {items?.map((item, index) => (
-        <li key={index}>
-          <Link href={item.href || ''} onClick={item.onClick}>
-            <div className="w-8 h-8 border rounded-md p-1">
-              <Icons iconType={item.icon} className="mr-2" />
-            </div>
-            <Text bold>{item.label}</Text>
+        <ListItem key={index} component="li" disablePadding>
+          <Link
+            href={item.href || ''}
+            onClick={item.onClick}
+            style={{ width: '100%', textDecoration: 'none' }}
+          >
+            <ListItemButton>
+              <ListItemIcon sx={{ minWidth: 32 }}>
+                <Box
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    border: '1px solid var(--color-default-border)',
+                    borderRadius: 1,
+                    padding: 4,
+                  }}
+                >
+                  <Icons iconType={item.icon} />
+                </Box>
+              </ListItemIcon>
+              <ListItemText primary={<Text bold>{item.label}</Text>} />
+            </ListItemButton>
           </Link>
-        </li>
+        </ListItem>
       ))}
-    </ul>
+    </List>
   );
 };

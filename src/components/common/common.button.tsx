@@ -1,6 +1,4 @@
-import { twMerge } from 'tailwind-merge';
-
-import { toCss } from '../../utils/utils.string';
+import { Box, CircularProgress, Button as MuiButton } from '@mui/material';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
@@ -10,41 +8,82 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'wide' | 'block' | 'square' | 'circle';
   mode?: 'ghost' | 'outline' | 'link';
   loading?: boolean;
-  onClick?: () => void;
+  onClick?: (ev?: React.SyntheticEvent) => void;
   disabled?: boolean;
-  btnProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  btnProps?: React.ComponentProps<typeof MuiButton>;
 }
 
+const colorMap = {
+  primary: 'primary',
+  secondary: 'secondary',
+  accent: 'inherit',
+  neutral: 'inherit',
+  info: 'info',
+  success: 'success',
+  warning: 'warning',
+  error: 'error',
+} as const;
+
+const sizeMap = {
+  xs: 'small',
+  sm: 'small',
+  md: 'medium',
+  lg: 'large',
+} as const;
+
+const sizePaddingMap = {
+  xs: '18px 10px',
+  sm: '20px 12px',
+  md: '24px 14px',
+  lg: '28px 16px',
+} as const;
+
 export const Button = (props: ButtonProps) => {
-  const btnStyles = twMerge([
-    'btn rounded-sm',
-    toCss(props.mode === 'ghost', 'btn-ghost'),
-    toCss(props.mode === 'link', 'btn-link'),
-    toCss(props.mode === 'outline', 'btn-outline border-base-300 hover:bg-bg2'),
-    toCss(props.disabled, 'cursor-not-allowed opacity-50'),
-    toCss(props.loading, 'cursor-not-allowed'),
-    toCss(props.variant, `btn-${props.variant}`),
-    toCss(props.size, `btn-${props.size}`, 'btn-md'),
-    toCss(props.color, `btn-${props.color}`),
-    props.className,
-  ]);
+  const {
+    className,
+    label,
+    children,
+    variant,
+    mode,
+    size = 'md',
+    color,
+    loading,
+    disabled,
+    onClick,
+    btnProps,
+    ...buttonProps
+  } = props;
+
+  const onClickHandler = (ev: React.MouseEvent<HTMLButtonElement>) => {
+    if (loading || disabled) return;
+    onClick?.(ev);
+  };
 
   return (
-    <button
-      className={btnStyles}
-      disabled={props.loading || props.disabled}
-      onClick={props.onClick}
-      {...props.btnProps}
+    <MuiButton
+      className={className}
+      {...buttonProps}
+      {...btnProps}
+      onClick={onClickHandler}
+      disabled={disabled || loading}
+      size={sizeMap[size]}
+      variant={mode === 'outline' ? 'outlined' : mode ? 'text' : 'contained'}
+      color={colorMap[color || 'primary'] as 'primary'}
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 8,
+        borderRadius: variant === 'square' ? 0 : 2,
+        ...(variant === 'circle' ? { borderRadius: '50%' } : {}),
+        ...(variant === 'circle' ? { minWidth: '3rem', minHeight: '3rem' } : {}),
+        ...(variant === 'wide' ? { px: 4 } : {}),
+        ...(variant === 'block' ? { width: '100%' } : {}),
+        ...(mode === 'link' ? { textDecoration: 'underline', px: 1 } : {}),
+        ...(size === 'xs' ? { py: 0.5, px: 1 } : {}),
+      }}
     >
-      {props.loading && <span className="loading loading-spinner loading-xs" />}
-      {props.label || props.children}
-    </button>
+      {loading && <CircularProgress size={14} color="inherit" />}
+      {label ?? children}
+    </MuiButton>
   );
 };
-
-/* tailwind include
-    btn btn-primary btn-secondary btn-accent btn-neutral btn-info btn-success btn-warning btn-error 
-    btn-ghost btn-link
-    btn-xs btn-sm btn-md btn-lg
-    btn-wide btn-block btn-square btn-circle
-*/

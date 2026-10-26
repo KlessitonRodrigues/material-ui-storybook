@@ -1,15 +1,22 @@
-import { HTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { Skeleton as MuiSkeleton } from '@mui/material';
 
-interface SquareSkeletonProps extends HTMLAttributes<HTMLDivElement> {
+interface SquareSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   show?: boolean;
 }
 
 export const SquareSkeleton = (props: SquareSkeletonProps) => {
   const { className, show, children, ...skeletonProps } = props;
-  const classNames = ['skeleton w-full h-40 rounded-sm'];
 
   if (!show) return <>{children}</>;
 
-  return <div className={twMerge(...classNames, className)} {...skeletonProps} />;
+  return (
+    <MuiSkeleton
+      component="div"
+      className={className}
+      variant="rectangular"
+      width="100%"
+      height={160}
+      {...skeletonProps}
+    />
+  );
 };

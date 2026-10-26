@@ -2,6 +2,7 @@ node_modules/
 .next/
 dist/
 cdk.out/
+.turbo/
 
 next-env.d.ts
 *storybook.log

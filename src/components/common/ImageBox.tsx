@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge';
+import { Box, Typography } from '@mui/material';
 
 interface ImageBoxProps {
   src?: string;
@@ -11,15 +11,31 @@ interface ImageBoxProps {
 export const ImageBox = (props: ImageBoxProps) => {
   const { src, alt, width, height, className } = props;
   return (
-    <div
-      className={twMerge('w-full max-w-md md:max-w-4xl bg-gray-200 overflow-hidden', className)}
+    <Box
+      className={className}
+      sx={{
+        width: '100%',
+        backgroundColor: '#e5e7eb',
+        overflow: 'hidden',
+      }}
       style={{ width, height }}
     >
       {src ? (
-        <img src={src} alt={alt} className="w-full h-full object-cover" />
+        <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-gray-500">{alt}</div>
+        <Box
+          sx={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#6b7280',
+          }}
+        >
+          <Typography>{alt}</Typography>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };

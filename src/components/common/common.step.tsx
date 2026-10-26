@@ -1,6 +1,5 @@
+import { Step, StepLabel, Stepper } from '@mui/material';
 import { useMemo } from 'react';
-
-import { toCss } from '../../utils/utils.string';
 
 interface StepsProps {
   className?: string;
@@ -11,17 +10,22 @@ interface StepsProps {
 export const Steps = (props: StepsProps) => {
   const { className = '', steps, direction = 'horizontal' } = props;
 
-  const StepList = useMemo(() => {
-    return steps.map(({ label, active }, index) => (
-      <li key={index} className={`step text-xs ${toCss(active, 'step-primary')}`}>
-        {label || ''}
-      </li>
-    ));
+  const activeStep = useMemo(() => {
+    return steps.reduce((acc, step, index) => (step.active ? index : acc), -1);
   }, [steps]);
 
-  return <ul className={`steps steps-${direction} ${className}`}>{StepList}</ul>;
+  return (
+    <Stepper
+      className={className}
+      orientation={direction === 'vertical' ? 'vertical' : 'horizontal'}
+      activeStep={activeStep}
+      alternativeLabel={direction === 'horizontal'}
+    >
+      {steps.map(({ label }, index) => (
+        <Step key={index}>
+          <StepLabel>{label || ''}</StepLabel>
+        </Step>
+      ))}
+    </Stepper>
+  );
 };
-
-/* tailwind include 
-   steps-horizontal steps-vertical
-*/

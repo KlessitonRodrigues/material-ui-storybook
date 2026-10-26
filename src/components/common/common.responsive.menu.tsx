@@ -1,6 +1,6 @@
 'use client';
+import { Box } from '@mui/material';
 import { useState } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import { Button } from './common.button';
 import { Icons } from './common.icon';
@@ -12,8 +12,8 @@ interface ResponsiveMenuProps {
 }
 
 const positionMap: Record<NonNullable<ResponsiveMenuProps['position']>, string> = {
-  top: '-top-2 -translate-y-full',
-  bottom: '-bottom-2 translate-y-full',
+  top: 'bottom: 100%',
+  bottom: 'top: 100%',
 };
 
 export const ResponsiveMenu = (props: ResponsiveMenuProps) => {
@@ -21,16 +21,10 @@ export const ResponsiveMenu = (props: ResponsiveMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative">
-      <div className="hidden lg:flex">{children}</div>
-      <div className="lg:hidden">
-        <Button
-          mode="ghost"
-          size="lg"
-          variant="square"
-          className="transition"
-          onClick={() => setIsOpen(prev => !prev)}
-        >
+    <Box sx={{ position: 'relative' }}>
+      <Box sx={{ display: { lg: 'flex', xs: 'none' } }}>{children}</Box>
+      <Box sx={{ display: { lg: 'none', xs: 'flex' } }}>
+        <Button mode="ghost" size="lg" variant="square" onClick={() => setIsOpen(prev => !prev)}>
           <SwapElements
             active={!isOpen}
             swapEffect="rotate"
@@ -38,16 +32,22 @@ export const ResponsiveMenu = (props: ResponsiveMenuProps) => {
             onElement={<Icons iconType="close" iconSize="2rem" />}
           />
         </Button>
-        <div
-          className={twMerge(
-            'fixed z-50 left-2 w-[94vw] p-6 bg-bg1 rounded-sm shadow-sm border',
-            positionMap[position],
-          )}
+        <Box
+          sx={{
+            position: 'fixed',
+            zIndex: 50,
+            left: 8,
+            width: '94vw',
+            padding: 24,
+            backgroundColor: 'var(--color-bg1)',
+            borderRadius: 1,
+            border: '1px solid var(--color-default-border)',
+          }}
           style={{ display: isOpen ? 'flex' : 'none' }}
         >
           {children}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };

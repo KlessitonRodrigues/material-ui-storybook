@@ -1,3 +1,12 @@
+import {
+  Box,
+  Table as MuiTable,
+  TableRow as MuiTableRow,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+} from '@mui/material';
 import { useMemo } from 'react';
 
 export interface TableProps {
@@ -12,43 +21,48 @@ export interface TableProps {
   onSelect?: (item: any) => void;
 }
 
-const getResponsiveStyle = (responsive?: 'sm' | 'md' | 'lg') => {
-  if (!responsive) return '';
-  // sm:table-cell md:table-cell lg:table-cell
-  return `hidden ${responsive}:table-cell`;
-};
+const breakpointMap = { sm: 'sm', md: 'md', lg: 'lg' } as const;
 
 export const Table = (props: TableProps) => {
   const { items, columns, isLoading, onSelect } = props;
 
   const tableTitles = useMemo(() => {
-    return columns.map(({ key, label, responsive, render }) => (
-      <th key={key} className={getResponsiveStyle(responsive)}>
-        {label}
-      </th>
-    ));
+    return columns.map(({ key, label, responsive }) => <TableCell key={key}>{label}</TableCell>);
   }, [columns]);
 
   const tableRows = useMemo(() => {
     return items.map((item, index) => (
-      <tr key={index} className="hover:bg-bg3 cursor-pointer" onClick={() => onSelect?.(item)}>
+      <MuiTableRow
+        key={index}
+        onClick={() => onSelect?.(item)}
+        sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'var(--color-bg3)' } }}
+      >
         {columns.map(column => (
-          <td key={column.key} className={getResponsiveStyle(column.responsive)}>
+          <TableCell
+            key={column.key}
+            sx={
+              column.responsive
+                ? { display: { [breakpointMap[column.responsive]]: 'table-cell' } }
+                : undefined
+            }
+          >
             {column.render ? column.render(item) : item[column.key]}
-          </td>
+          </TableCell>
         ))}
-      </tr>
+      </MuiTableRow>
     ));
   }, [items, columns, onSelect]);
 
   return (
-    <div className="w-full">
-      <table className="table">
-        <thead className="bg-bg2">
-          <tr>{tableTitles}</tr>
-        </thead>
-        <tbody data-loading={isLoading}>{tableRows}</tbody>
-      </table>
-    </div>
+    <Box data-loading={isLoading} sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+      <TableContainer>
+        <MuiTable>
+          <TableHead sx={{ backgroundColor: 'var(--color-bg2)' }}>
+            <MuiTableRow>{tableTitles}</MuiTableRow>
+          </TableHead>
+          <tbody>{tableRows}</tbody>
+        </MuiTable>
+      </TableContainer>
+    </Box>
   );
 };

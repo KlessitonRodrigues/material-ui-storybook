@@ -1,8 +1,7 @@
+import { Box, Breadcrumbs as MuiBreadcrumbs, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { twMerge } from 'tailwind-merge';
 
-import { Row } from './common.container.flex';
 import { If } from './common.container.if';
 import { IconProps, Icons } from './common.icon';
 
@@ -13,24 +12,41 @@ export interface BreadcumbsProps {
 
 export const Breadcumbs = (props: BreadcumbsProps) => {
   const { className, items } = props;
-  const classNames = [`breadcrumbs text-sm font-bold bg-bg1 px-4 py-2 rounded-md shadow-sm`];
 
   const itemList = useMemo(() => {
     return items?.map((item, index) => (
-      <li key={index} className="flex gap-2">
+      <Box key={index} sx={{ display: 'flex', gap: 8, alignItems: 'center' }}>
         <Icons iconType={item.icon} />
         <If
           condition={!!item.href}
-          true={<Link href={item.href || ''}>{item.label}</Link>}
-          false={<Row>{item.label}</Row>}
+          true={
+            <Link href={item.href || ''} style={{ textDecoration: 'none' }}>
+              <Typography component="span" sx={{ fontWeight: 700 }}>
+                {item.label}
+              </Typography>
+            </Link>
+          }
+          false={
+            <Typography component="span" sx={{ fontWeight: 700 }}>
+              {item.label}
+            </Typography>
+          }
         />
-      </li>
+      </Box>
     ));
   }, [items]);
 
   return (
-    <div className={twMerge(...classNames, className)}>
-      <ul>{itemList}</ul>
-    </div>
+    <MuiBreadcrumbs
+      className={className}
+      sx={{
+        backgroundColor: 'var(--color-bg1)',
+        padding: '8px 16px',
+        borderRadius: 1,
+        boxShadow: 'var(--shadow-sm)',
+      }}
+    >
+      {itemList}
+    </MuiBreadcrumbs>
   );
 };

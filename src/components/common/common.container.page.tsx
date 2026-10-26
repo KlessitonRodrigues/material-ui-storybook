@@ -1,28 +1,48 @@
-import { twMerge } from 'tailwind-merge';
+import { Box } from '@mui/material';
 
 interface IPage {
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const Page = ({ className, ...props }: IPage) => {
   return (
-    <div
+    <Box
+      className={className}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 8,
+        maxWidth: 1400,
+        margin: 'auto',
+        pb: 20,
+      }}
       {...props}
-      className={twMerge(`flex flex-col items-center gap-2 pb-20 max-w-350 m-auto ${className}`)}
     />
   );
 };
 
 export const PageFull = ({ className, ...props }: IPage) => {
   return (
-    <div
+    <Box
+      className={className}
+      sx={{
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden auto',
+      }}
       {...props}
-      className={twMerge(`w-screen h-screen overflow-hidden overflow-y-auto ${className}`)}
     />
   );
 };
 
 export const PageContent = ({ className, ...props }: IPage) => {
-  return <div {...props} className={twMerge(`w-full h-full px-2 xl:px-0 ${className}`)} />;
+  return (
+    <Box
+      className={className}
+      sx={{ width: '100%', height: '100%', padding: { xl: 0, xs: 8 } }}
+      {...props}
+    />
+  );
 };

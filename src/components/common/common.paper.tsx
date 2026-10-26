@@ -1,21 +1,27 @@
-import { HTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { Box, Paper as MuiPaper } from '@mui/material';
 
-export interface PaperProps extends HTMLAttributes<HTMLDivElement> {
+export interface PaperProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 export const Paper = (props: PaperProps) => {
   const { className, children, ...paperProps } = props;
 
-  const paperStyles = twMerge([
-    'paper w-full space-y-4 rounded-sm bg-bg1 p-6 shadow-sm slide-up',
-    className,
-  ]);
-
   return (
-    <div className={paperStyles} {...paperProps}>
+    <MuiPaper
+      component={Box}
+      className={className}
+      sx={{
+        width: '100%',
+        padding: 24,
+        boxShadow: 'var(--shadow-sm)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 16,
+      }}
+      {...paperProps}
+    >
       {children}
-    </div>
+    </MuiPaper>
   );
 };

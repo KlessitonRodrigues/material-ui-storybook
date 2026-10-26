@@ -1,9 +1,5 @@
 @import 'tailwindcss';
 
-@plugin "daisyui" {
-  themes: light --default;
-}
-
 @source "../";
 
 :root {
@@ -31,30 +27,6 @@
   --color-transparent-bg: #ffffff99;
   --skeleton-base: #e5e7eb;
   --skeleton-shimmer: #f3f4f6;
-
-  /* Daisy theme */
-  --size-field: 0.2rem;
-  --color-base-100: var(--color-bg1);
-  --color-base-200: var(--color-bg3);
-  --color-base-300: var(--color-bg4);
-  --color-base-content: var(--color-fg1);
-  --color-primary: var(--color-main);
-  --color-primary-content: var(--color-main-text);
-  --color-secondary: var(--color-default-blue);
-  --color-secondary-content: var(--color-default-white);
-  --color-accent: var(--color-bg1);
-  --color-accent-content: var(--color-fg1);
-  --color-neutral: var(--color-bg1);
-  --color-neutral-content: var(--color-fg1);
-  --color-info: var(--color-default-blue);
-  --color-info-content: var(--color-default-white);
-  --color-success: var(--color-default-green);
-  --color-success-content: var(--color-default-white);
-  --color-warning: var(--color-default-yellow);
-  --color-warning-content: var(--color-default-white);
-  --color-error: var(--color-default-red);
-  --color-error-content: var(--color-default-white);
-  --tab-bg: var(--color-bg2);
 
   /* Font Families */
   --font-sans: Rubik, sans-serif;
@@ -119,13 +91,6 @@ body.dark {
   --color-transparent-bg: #00000099;
   --skeleton-base: #4b5563;
   --skeleton-shimmer: #6b7280;
-
-  /* Daisy theme */
-  --color-base-100: var(--color-bg1);
-  --color-base-200: var(--color-bg3);
-  --color-base-300: var(--color-bg4);
-  --color-base-content: var(--color-fg1);
-  --tab-bg: var(--color-bg2);
 }
 
 input.hide-caret,

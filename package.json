@@ -10,6 +10,12 @@
     "build": "storybook build"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.5.0",
+    "@mui/material": "^9.5.0",
+    "aria-query": "^5.3.2",
+    "lz-string": "^1.5.0",
     "next": "^16.2.10",
     "react": "^19.2.7",
     "react-dom": "^19.2.8"
@@ -43,5 +49,9 @@
   "exports": {
     ".": "./src/index.tsx",
     "./*": "./src/*"
+  },
+  "resolutions": {
+    "@testing-library/dom/aria-query": "5.3.2",
+    "aria-query": "5.3.2"
   }
 }

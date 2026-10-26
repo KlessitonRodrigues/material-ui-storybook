@@ -1,7 +1,17 @@
-import { twMerge } from 'tailwind-merge';
+import { Box } from '@mui/material';
 
 type IChart = React.HTMLAttributes<HTMLDivElement>;
 
 export const Chart = ({ className, ...props }: IChart) => {
-  return <div {...props} className={twMerge(`min-h-120 p-4 border border-default ${className}`)} />;
+  return (
+    <Box
+      className={className}
+      sx={{
+        minHeight: 480,
+        padding: 16,
+        border: '1px solid var(--color-default-border)',
+      }}
+      {...props}
+    />
+  );
 };
