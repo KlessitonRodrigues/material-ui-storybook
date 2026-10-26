@@ -1,21 +1,12 @@
-import { Box } from '@mui/material';
+import { twMerge } from 'tailwind-merge';
 
 type IForm = React.HTMLAttributes<HTMLFormElement>;
 
 export const Form = ({ className, ...props }: IForm) => {
   return (
-    <Box
-      component="form"
-      className={className}
-      sx={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        gap: 16,
-      }}
+    <form
       {...props}
+      className={twMerge(`w-full h-full flex flex-col justify-start gap-4 ${className}`)}
     />
   );
 };

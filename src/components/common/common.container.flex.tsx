@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { twMerge } from 'tailwind-merge';
 
 type IFlex = {
   className?: string;
@@ -10,51 +10,34 @@ type IFlex = {
   style?: React.CSSProperties;
 };
 
-const alignMap = {
-  center: 'center',
-  start: 'flex-start',
-  end: 'flex-end',
-  between: 'space-between',
-  stretch: 'stretch',
-} as const;
-
-const breakpointMap = { sm: 'sm', md: 'md', lg: 'lg', xl: 'xl', '2xl': 'xl' } as const;
-
 export const Row = (props: IFlex) => {
-  const { flexY, flexX, gap, responsive, ...RowProps } = props;
-  const breakpoint = responsive ? breakpointMap[responsive] : null;
+  const { className, flexY, flexX, gap, ...RowProps } = props;
+  const flexStyle = ['flex flex-row w-full'];
+  flexStyle.push(`justify-${flexX || 'start'}`);
+  flexStyle.push(`items-${flexY || 'center'}`);
+  flexStyle.push(`gap-${gap ?? 2}`);
+  if (props.responsive) flexStyle.push(`flex-col ${props.responsive}:flex-row`);
+  else flexStyle.push('flex-row');
+  if (className) flexStyle.push(className);
 
-  return (
-    <Box
-      sx={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: alignMap[flexX || 'start'],
-        alignItems: alignMap[flexY || 'center'],
-        gap: (gap ?? 2) * 8,
-        ...(breakpoint ? { flexDirection: { xs: 'column', [breakpoint]: 'row' } as object } : null),
-      }}
-      {...RowProps}
-    />
-  );
+  return <div {...RowProps} className={twMerge(flexStyle.join(' '))} />;
 };
 
 export const Column = (props: IFlex) => {
-  const { flexY, flexX, gap, ...ColumnProps } = props;
+  const { className, flexY, flexX, gap, ...ColumnProps } = props;
+  const flexStyle = ['w-full h-full flex flex-col'];
+  flexStyle.push(`justify-${flexY || 'start'}`);
+  flexStyle.push(`items-${flexX || 'center'}`);
+  flexStyle.push(`gap-${gap ?? 2}`);
+  if (className) flexStyle.push(className);
 
-  return (
-    <Box
-      sx={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: alignMap[flexY || 'start'],
-        alignItems: alignMap[flexX || 'center'],
-        gap: (gap ?? 2) * 8,
-      }}
-      {...ColumnProps}
-    />
-  );
+  return <div {...ColumnProps} className={twMerge(flexStyle.join(' '))} />;
 };
+
+/* tailwind include
+    flex flex-row flex-col
+    items-center items-start items-end items-between items-stretch
+    justify-center justify-start justify-end justify-between justify-stretch
+    gap-0 gap-1 gap-2 gap-3 gap-4 gap-5 gap-6 gap-7 gap-8 gap-9 gap-10
+    sm:flex-row md:flex-row lg:flex-row xl:flex-row 2xl:flex-row
+*/

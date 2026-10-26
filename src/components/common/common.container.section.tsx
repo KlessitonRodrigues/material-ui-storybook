@@ -1,23 +1,11 @@
-import { Box } from '@mui/material';
+import { twMerge } from 'tailwind-merge';
+
+import { Column } from './common.container.flex';
 
 interface PageSectionProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const PageSection = (props: PageSectionProps) => {
   const { className } = props;
 
-  return (
-    <Box
-      className={className}
-      sx={{
-        width: '100%',
-        padding: 48,
-        marginY: 24,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 64,
-      }}
-      {...props}
-    />
-  );
+  return <Column {...props} gap={8} className={twMerge(`w-full p-12 my-6 ${className}`)} />;
 };

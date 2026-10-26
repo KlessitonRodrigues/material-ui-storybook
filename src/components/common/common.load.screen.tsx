@@ -1,8 +1,9 @@
-import { Box, CircularProgress } from '@mui/material';
+import { HTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { Text } from './common.text';
 
-export interface LoadScreenProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LoadScreenProps extends HTMLAttributes<HTMLDivElement> {
   title?: string;
   children?: React.ReactNode;
 }
@@ -11,33 +12,17 @@ export const LoadScreen = (props: LoadScreenProps) => {
   const { className, children, ...loadScreenProps } = props;
 
   return (
-    <Box
-      className={className}
-      sx={{
-        position: 'absolute',
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'var(--color-default-black)',
-        zIndex: 50,
-      }}
+    <div
+      className={twMerge(`absolute w-screen h-screen bg-black z-50 ${className}`)}
       {...loadScreenProps}
     >
-      <Box
-        sx={{
-          height: '100%',
-          margin: 'auto',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 16,
-        }}
-      >
-        <CircularProgress size={48} color="primary" />
-        <Text size="4xl" bold style={{ color: '#ffffff' }}>
+      <div className="m-auto flex gap-4 items-center justify-center h-full">
+        <span className="loading loading-bars loading-xl text-white" />
+        <Text size="4xl" bold className="text-white">
           {props.title}
         </Text>
         {children}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };

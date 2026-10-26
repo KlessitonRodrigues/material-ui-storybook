@@ -1,23 +1,14 @@
-import { Box } from '@mui/material';
+import { HTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  children?: React.ReactNode;
-}
+interface CardProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const Card = ({ className, children, ...cardProps }: CardProps) => {
+export const Card = (props: CardProps) => {
+  const { className, children, ...cardProps } = props;
+
   return (
-    <Box
-      className={className}
-      sx={{
-        width: '100%',
-        padding: 16,
-        backgroundColor: 'var(--color-bg1)',
-        border: '1px solid var(--color-default-border)',
-        borderRadius: 1,
-      }}
-      {...cardProps}
-    >
+    <div className={twMerge('w-full card bg-bg1 border rounded-sm p-4', className)} {...cardProps}>
       {children}
-    </Box>
+    </div>
   );
 };

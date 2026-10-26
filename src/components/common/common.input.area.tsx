@@ -1,8 +1,9 @@
-'use client';
+import { HTMLAttributes, ReactNode, TextareaHTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-import { TextField } from '@mui/material';
+import { toCss } from '../../utils/utils.string';
 
-export interface AreaInputFieldProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AreaInputFieldProps extends HTMLAttributes<HTMLFieldSetElement> {
   size?: 'sm' | 'md' | 'lg';
   placeholder?: string;
   label?: string;
@@ -10,34 +11,60 @@ export interface AreaInputFieldProps extends React.HTMLAttributes<HTMLDivElement
   error?: string;
   disabled?: boolean;
   hideCaret?: boolean;
-  before?: React.ReactNode;
-  after?: React.ReactNode;
+  before?: ReactNode;
+  after?: ReactNode;
   loading?: boolean;
-  inputProps?: React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+  inputProps?: TextareaHTMLAttributes<HTMLTextAreaElement>;
 }
 
 export const AreaInputField = (props: AreaInputFieldProps) => {
-  const { label, placeholder, className, error, disabled, hideCaret, loading, inputProps } = props;
+  const {
+    className,
+    size,
+    error,
+    placeholder,
+    label,
+    disabled,
+    hideCaret,
+    before,
+    after,
+    loading,
+    inputProps,
+    ...fieldProps
+  } = props;
+
+  const fieldStyles = twMerge([
+    'outline-none w-full',
+    toCss(size, `textarea-${size}`, 'textarea-md'),
+    toCss(error, 'textarea-error'),
+    className,
+  ]);
+
+  const textareaStyles = twMerge([
+    'textarea outline-none w-full h-full text-base',
+    toCss(hideCaret, 'hide-caret focus:text-primary'),
+  ]);
 
   return (
-    <TextField
-      data-loading={loading}
-      className={className}
-      multiline
-      rows={4}
-      placeholder={placeholder}
-      label={label}
-      disabled={disabled}
-      error={!!error}
-      helperText={error}
-      fullWidth
-      variant="outlined"
-      slotProps={{
-        htmlInput: {
-          ...inputProps,
-          className: hideCaret ? 'hide-caret' : undefined,
-        },
-      }}
-    />
+    <fieldset className={'fieldset w-full'} {...fieldProps}>
+      {label && <legend className="fieldset-legend font-normal">{label}</legend>}
+      <label className={fieldStyles} data-loading={loading}>
+        {before}
+        <textarea
+          className={textareaStyles}
+          placeholder={placeholder}
+          disabled={disabled}
+          {...inputProps}
+        />
+        {after}
+      </label>
+      {error && <p className="label text-red">{error}</p>}
+    </fieldset>
   );
 };
+
+/* Tailwind include
+  textarea textarea-sm textarea-md textarea-lg
+  textarea-error
+  fieldset fieldset-legend
+*/

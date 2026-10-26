@@ -1,4 +1,7 @@
-import { FormControl, FormControlLabel, Radio as MuiRadio, RadioGroup } from '@mui/material';
+import { twMerge } from 'tailwind-merge';
+
+import { toCss } from '../../utils/utils.string';
+import { Row } from './common.container.flex';
 
 export interface RadioInputFieldProps {
   className?: string;
@@ -10,26 +13,33 @@ export interface RadioInputFieldProps {
 }
 
 export const RadioInputField = (props: RadioInputFieldProps) => {
-  const size = props.size === 'sm' ? 'small' : props.size === 'lg' ? 'medium' : 'medium';
+  const inputStyles = twMerge([
+    'radio mx-2',
+    toCss(props.size, `radio-${props.size}`, 'radio-md'),
+    props.className,
+  ]);
 
   return (
-    <FormControl className={props.className} sx={{ width: '100%' }}>
-      <RadioGroup
-        row
-        name={props.name}
-        defaultValue={props.defaultValue}
-        onChange={e => props.onChange?.(e.target.value)}
-      >
-        {props.options.map(option => (
-          <FormControlLabel
-            key={option.value}
-            value={option.value}
-            control={<MuiRadio size={size} />}
-            label={option.label}
-            sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.75rem' } }}
+    <Row className={twMerge(props.className)}>
+      {props.options.map(option => (
+        <label key={option.value} className="cursor-pointer">
+          <input
+            className={inputStyles}
+            type="radio"
+            name={props.name}
+            aria-label={option.label}
+            defaultChecked={props.defaultValue === option.value}
+            onChange={() => props.onChange?.(option.value)}
           />
-        ))}
-      </RadioGroup>
-    </FormControl>
+          <span className="text-xs">{option.label}</span>
+        </label>
+      ))}
+    </Row>
   );
 };
+
+/* Tailwind include
+  join join-item
+  radio radio-sm radio-md radio-lg
+  btn btn-sm btn-md btn-lg
+*/

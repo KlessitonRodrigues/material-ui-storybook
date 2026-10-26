@@ -1,14 +1,10 @@
 'use client';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Button as MuiButton,
-} from '@mui/material';
 import { useState } from 'react';
 
 import { Button } from './common.button';
+import { Row } from './common.container.flex';
+import { Icons } from './common.icon';
+import { Text } from './common.text';
 
 interface ConfirmModalProps {
   message: string;
@@ -16,12 +12,16 @@ interface ConfirmModalProps {
   closeLabel?: string;
   confirmLabel?: string;
   children: React.ReactNode;
-  onConfirm?: () => void;
+  onConfirm?: () => any;
 }
 
 export const ConfirmModal = (props: ConfirmModalProps) => {
-  const { message, children, color = 'primary', onConfirm, confirmLabel, closeLabel } = props;
+  const { message, children, color = 'primary', onConfirm } = props;
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsOpen(false);
+  };
 
   const handleConfirm = () => {
     onConfirm?.();
@@ -31,25 +31,23 @@ export const ConfirmModal = (props: ConfirmModalProps) => {
   return (
     <div onClick={() => !isOpen && setIsOpen(true)}>
       {children}
-      <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        sx={{ '& .MuiPaper-root': { width: '20rem' } }}
-      >
-        <DialogContent>
-          <DialogContentText sx={{ fontWeight: 700, textAlign: 'center' }}>
+      <dialog className="modal" open={isOpen}>
+        <div className="modal-box w-80 space-y-8 p-4">
+          <Text bold size="lg" className="text-center">
             {message}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'space-between', padding: 16 }}>
-          <Button mode="ghost" onClick={() => setIsOpen(false)}>
-            {closeLabel || 'Cancel'}
-          </Button>
-          <MuiButton variant="contained" color={color} onClick={handleConfirm}>
-            {confirmLabel || 'Confirm'}
-          </MuiButton>
-        </DialogActions>
-      </Dialog>
+          </Text>
+          <Row flexX="between">
+            <Button type="button" color="accent" onClick={handleCancel}>
+              <Icons iconSize="1rem" iconType="close" />
+              {props.closeLabel || 'Cancel'}
+            </Button>
+            <Button type="button" color={color} onClick={handleConfirm}>
+              <Icons iconSize="1rem" iconType="checkMark" />
+              {props.confirmLabel || 'Confirm'}
+            </Button>
+          </Row>
+        </div>
+      </dialog>
     </div>
   );
 };

@@ -1,10 +1,12 @@
-import { Box, List, ListItem, ListItemButton, ListItemIcon, Stack } from '@mui/material';
 import Link from 'next/link';
+import { HTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 
+import { Column } from './common.container.flex';
 import { IconProps, Icons } from './common.icon';
 import { Text } from './common.text';
 
-export interface DescriptionMenuProps extends React.HTMLAttributes<HTMLUListElement> {
+export interface DescriptionMenuProps extends HTMLAttributes<HTMLUListElement> {
   items?: {
     icon: IconProps['iconType'];
     label: string;
@@ -17,49 +19,30 @@ export interface DescriptionMenuProps extends React.HTMLAttributes<HTMLUListElem
 
 export const DescriptionMenu = (props: DescriptionMenuProps) => {
   const { className, items, ...menuProps } = props;
+  const classNames = [`menu w-full h-full gap-1 lg:min-w-md bg-bg1 ${className}`];
 
   return (
-    <List
-      component="ul"
-      className={className}
-      sx={{ width: '100%', gap: 4, backgroundColor: 'var(--color-bg1)', padding: 0 }}
-      {...menuProps}
-    >
-      {items?.map((item, index) => (
-        <ListItem key={index} component="li" disablePadding>
-          <Link
-            href={item.href || ''}
-            onClick={item.onClick}
-            style={{ width: '100%', textDecoration: 'none' }}
-          >
-            <ListItemButton>
-              <ListItemIcon>
-                <Box
-                  sx={{
-                    padding: 8,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 1,
-                    border: '1px solid var(--color-default-border)',
-                    backgroundColor: item.active ? 'var(--color-main-bg)' : 'var(--color-bg1)',
-                    color: item.active ? '#fff' : 'var(--color-fg1)',
-                  }}
-                >
-                  <Icons iconType={item.icon} />
-                </Box>
-              </ListItemIcon>
-              <Stack>
+    <ul className={twMerge(...classNames)} {...menuProps}>
+      {items?.map((item, index) => {
+        const activeItem = item.active ? 'bg-main text-white' : 'bg-bg1 text-fg1';
+        return (
+          <li key={index}>
+            <Link href={item.href || ''} onClick={item.onClick}>
+              <div className={`border rounded-md p-2 w-10 ${activeItem}`}>
+                <Icons iconType={item.icon} />
+              </div>
+              <Column flexX="start" gap={0}>
                 <Text size="lg" bold>
                   {item.label}
                 </Text>
-                <Text size="xs" opacity="70">
+                <Text tag="p" size="xs" opacity="70">
                   {item.description}
                 </Text>
-              </Stack>
-            </ListItemButton>
-          </Link>
-        </ListItem>
-      ))}
-    </List>
+              </Column>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 };

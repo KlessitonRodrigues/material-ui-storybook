@@ -1,6 +1,6 @@
 'use client';
-import { Box, Tab as MuiTab, Tabs as MuiTabs } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { IconProps, Icons } from './common.icon';
 
@@ -18,15 +18,13 @@ export type TabListProps = {
   onSelect?: (item: TabListProps['items'][number], index: number) => void;
 };
 
-const breakpointMap = { sm: 'sm', md: 'md', lg: 'lg' } as const;
-
 export const TabList = (props: TabListProps) => {
   const { items, defaultItem, className, onSelect, ...tabListProps } = props;
   const [tabIndex, setTabIndex] = useState(defaultItem ?? 0);
 
-  const handleChange = (_event: React.SyntheticEvent, value: number) => {
-    setTabIndex(value);
-    if (onSelect) onSelect(items[value], value);
+  const onSelectItem = (index: number) => {
+    setTabIndex(index);
+    if (onSelect) onSelect(items[index], index);
   };
 
   useEffect(() => {
@@ -35,31 +33,38 @@ export const TabList = (props: TabListProps) => {
 
   const tabOptions = useMemo(() => {
     return items.map((item, index) => {
-      const sx = item.responsive
-        ? { display: { xs: 'none', [breakpointMap[item.responsive]]: 'flex' } }
-        : undefined;
+      const classNames = ['tab tabs-lg text-xs text-fg1 gap-1 hover:bg-bg2'];
+      if (tabIndex === index) classNames.push('tab-active text-primary');
+      if (item.disabled) classNames.push('tab-disabled');
+      if (item.responsive) classNames.push('hidden', `${item.responsive}:flex`);
 
       return (
-        <MuiTab
+        <a
+          role="tab"
           key={index}
-          label={item.label}
-          icon={item.icon ? <Icons iconType={item.icon} iconSize="1.2rem" /> : undefined}
-          iconPosition="start"
-          disabled={item.disabled}
-          sx={sx}
-        />
+          className={twMerge(classNames.join(' '))}
+          onClick={() => onSelectItem(index)}
+        >
+          {item.icon && <Icons iconType={item.icon} iconSize="1.2rem" />}
+          {item.label}
+        </a>
       );
     });
-  }, [items]);
+  }, [items, tabIndex]);
 
   return (
-    <Box className={className} sx={{ width: '100%' }} {...tabListProps}>
-      <MuiTabs value={tabIndex} onChange={handleChange}>
+    <div className={twMerge('w-full', className)} {...tabListProps}>
+      <div role="tablist" className="tabs tabs-lift">
         {tabOptions}
-      </MuiTabs>
-      <Box key={tabIndex} sx={{ mt: 2 }}>
+        <div className="flex-1 border-b" />
+      </div>
+      <div key={tabIndex} className="mt-2 slide-left">
         {items[tabIndex]?.content}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
+
+/* tailwind include
+   sm:flex md:flex lg:flex 
+*/

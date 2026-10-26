@@ -1,5 +1,3 @@
-import { Box } from '@mui/material';
-
 import { Icons } from './common.icon';
 
 interface CarouselProps {
@@ -10,69 +8,31 @@ interface CarouselProps {
 export const Carousel = (props: CarouselProps) => {
   const { items, height } = props;
   return (
-    <Box sx={{ width: '100%', position: 'relative' }} style={{ height }}>
-      <Box
-        sx={{
-          display: 'flex',
-          overflow: 'auto scroll',
-          height: '100%',
-          width: '100%',
-          flexDirection: 'column',
-          scrollSnapType: 'y mandatory',
-        }}
-      >
+    <div className="w-full relative" style={{ height }}>
+      <div className="carousel carousel-vertical h-full w-full">
         {items.map(({ imgUrl, content }, index) => (
-          <Box
-            key={index}
-            id={`slide${index}`}
-            sx={{ height: '100%', position: 'relative', scrollSnapAlign: 'start', flexShrink: 0 }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                background: `center / cover no-repeat url(${imgUrl})`,
+          <div key={index} id={`slide${index}`} className="carousel-item h-full relative">
+            <div
+              className="absolute inset-0 bg-no-repeat bg-center bg-cover"
+              style={{
+                backgroundImage: `url(${imgUrl})`,
                 filter: 'brightness(0.5)',
               }}
             />
-            <Box sx={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex' }}>
-              {content}
-            </Box>
+            <div className="relative z-10 w-full flex">{content}</div>
             <a href={`#slide${index === 0 ? items.length - 1 : index - 1}`}>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 16,
-                  right: 24,
-                  color: '#fff',
-                  padding: 8,
-                  zIndex: 20,
-                  border: '1px solid var(--color-default-border)',
-                  borderRadius: '50%',
-                }}
-              >
+              <div className="absolute top-4 right-6 text-white p-2 z-20 border rounded-full">
                 <Icons iconType="upArrow" />
-              </Box>
+              </div>
             </a>
             <a href={`#slide${(index + 1) % items.length}`}>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 16,
-                  right: 24,
-                  color: '#fff',
-                  padding: 8,
-                  zIndex: 20,
-                  border: '1px solid var(--color-default-border)',
-                  borderRadius: '50%',
-                }}
-              >
+              <div className="absolute bottom-4 right-6 text-white p-2 z-20 border rounded-full">
                 <Icons iconType="downArrow" />
-              </Box>
+              </div>
             </a>
-          </Box>
+          </div>
         ))}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };

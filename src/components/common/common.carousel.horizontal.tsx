@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { twMerge } from 'tailwind-merge';
 
 import { ImageBox } from './ImageBox';
 import { Button } from './common.button';
@@ -16,16 +16,7 @@ export const HorizontalCarousel = (props: HorizontalCarouselProps) => {
 
   return (
     <Column gap={0}>
-      <Row
-        style={{
-          position: 'relative',
-          maxWidth: 1024,
-          border: '1px solid var(--color-default-border)',
-          boxShadow: 'var(--shadow-sm)',
-          padding: 32,
-        }}
-        gap={0}
-      >
+      <Row className="relative max-w-5xl border rounded-md shadow-sm p-8" gap={0}>
         {items.map((item, index) => (
           <Column
             key={index}
@@ -47,7 +38,8 @@ export const HorizontalCarousel = (props: HorizontalCarouselProps) => {
         <Button
           size="lg"
           color="primary"
-          style={{ position: 'absolute', left: -24, top: '50%' }}
+          variant="square"
+          className="absolute -left-6 top-1/2 rounded-full"
           onClick={() => handleChangeSelected(selected - 1)}
           disabled={selected === 0}
         >
@@ -56,24 +48,22 @@ export const HorizontalCarousel = (props: HorizontalCarouselProps) => {
         <Button
           size="lg"
           color="primary"
-          style={{ position: 'absolute', right: -24, top: '50%' }}
+          variant="square"
+          className="absolute -right-6 top-1/2 rounded-full"
           onClick={() => handleChangeSelected(selected + 1)}
           disabled={selected === items.length - 1}
         >
           <Icons iconType="caretRight" />
         </Button>
       </Row>
-      <Row flexX="center" gap={2} style={{ marginTop: 16 }}>
+      <Row flexX="center" gap={2} className="mt-4">
         {items.map((_, index) => (
-          <Box
+          <span
             key={index}
-            sx={{
-              height: 8,
-              width: 8,
-              borderRadius: '50%',
-              cursor: 'pointer',
-              backgroundColor: index === selected ? 'var(--color-main)' : '#d1d5db',
-            }}
+            className={twMerge(
+              `h-2 w-2 rounded-full cursor-pointer`,
+              `${index === selected ? 'bg-primary' : 'bg-gray-300'}`,
+            )}
             onClick={() => handleChangeSelected(index)}
           />
         ))}
